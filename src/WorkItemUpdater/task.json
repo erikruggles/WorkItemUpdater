@@ -12,7 +12,7 @@
     ],
     "version": {
         "Major": "0",
-        "Minor": "2",
+        "Minor": "3",
         "Patch": "1"
     },
     "demands": [],
@@ -33,12 +33,12 @@
             }
         },
         {
-            "name": "processId",
+            "name": "project",
             "type": "pickList",
-            "label": "Process",
+            "label": "Project",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Work Item states are defined on a process-by-process basis so if you want to move items in different projects, you need to be able to specify different processes to get an accurate list of work items and their states.",
+            "helpMarkDown": "Select a project that has the Work Items and Work Item states you wish to move. This will not limit the tool to this project, it is just needed for the work item type and work item state dropdowns.",
             "properties": {
                 "DisableManageLink": "True",
                 "EditableOptions": "False",
@@ -235,28 +235,27 @@
     ],
     "sourceDefinitions": [
         {
-            "target": "processId",
-            "endpoint": "/_apis/process/processes?api-version=5.1-preview.1",
+            "target": "project",
+            "endpoint": "/_apis/projects?api-version=5.1",
             "selector": "jsonpath:$.value[*].name",
-            "keySelector": "jsonpath:$.value[*].id",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemType",
-            "endpoint": "/_apis/work/processes/$(processId)/workitemtypes?api-version=5.1-preview.2",
+            "endpoint": "$(project)/_apis/wit/workitemtypes?api-version=5.1",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemState",
-            "endpoint": "/_apis/work/processes/$(processId)/workItemTypes/$(workItemType)/states?api-version=5.1-preview.1",
-            "selector": "jsonpath:$.__wrappedArray[*]",
+            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=5.1-preview.1",
+            "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemCurrentState",
-            "endpoint": "/_apis/work/processes/$(processId)/workItemTypes/$(workItemType)/states?api-version=5.1-preview.1",
-            "selector": "jsonpath:$.__wrappedArray[*]",
+            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=5.1-preview.1",
+            "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         }
     ],
