@@ -1,9 +1,9 @@
 ﻿{
-    "id": "7164116a-ed17-48be-9c53-b440b2b1dd2e",
-    "name": "WorkItemUpdater",
-    "friendlyName": "WorkItem Updater",
-    "description": "This task adds functionality to update WorkItems during a Build or Release.",
-    "author": "Blue Basher",
+    "id": "af18c555-a6c8-445d-979f-74feeae6bdfb",
+    "name": "TwWorkItemUpdater",
+    "friendlyName": "TempWorks WorkItem Updater",
+    "description": "This task adds functionality to update WorkItems during a Build or Release. Modified from the WorkItemUpdater project started by Blue Basher.",
+    "author": "Erik Ruggles",
     "helpMarkDown": "",
     "category": "Utility",
     "visibility": [
@@ -11,9 +11,9 @@
         "Release"
     ],
     "version": {
-        "Major": "2",
-        "Minor": "3",
-        "Patch": "765"
+        "Major": "0",
+        "Minor": "2",
+        "Patch": "1"
     },
     "demands": [],
     "minimumAgentVersion": "1.91.0",
@@ -30,6 +30,19 @@
             "options": {
                 "Build": "WorkItems linked to the Build/Release",
                 "Query": "Query"
+            }
+        },
+        {
+            "name": "processId",
+            "type": "pickList",
+            "label": "Process",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Work Item states are defined on a process-by-process basis so if you want to move items in different projects, you need to be able to specify different processes to get an accurate list of work items and their states.",
+            "properties": {
+                "DisableManageLink": "True",
+                "EditableOptions": "False",
+                "MultiSelectFlatList": "False"
             }
         },
         {
@@ -51,7 +64,7 @@
             "properties": {
                 "DisableManageLink": "True",
                 "EditableOptions": "False",
-                "MultiSelectFlatList": "True"
+                "MultiSelectFlatList": "False"
             }
         },
         {
@@ -222,20 +235,27 @@
     ],
     "sourceDefinitions": [
         {
+            "target": "processId",
+            "endpoint": "/_apis/process/processes?api-version=5.1-preview.1",
+            "selector": "jsonpath:$.value[*].name",
+            "keySelector": "jsonpath:$.value[*].id",
+            "authKey": "tfs:teamfoundation"
+        },
+        {
             "target": "workItemType",
-            "endpoint": "/$(system.teamProject)/_apis/wit/workItemTypes?api-version=1.0",
+            "endpoint": "/_apis/work/processes/$(processId)/workitemtypes?api-version=5.1-preview.2",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemState",
-            "endpoint": "/$(system.teamProject)/_api/_wit/allowedValues?__v=5&fieldId=2",
+            "endpoint": "/_apis/work/processes/$(processId)/workItemTypes/$(workItemType)/states?api-version=5.1-preview.1",
             "selector": "jsonpath:$.__wrappedArray[*]",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemCurrentState",
-            "endpoint": "/$(system.teamProject)/_api/_wit/allowedValues?__v=5&fieldId=2",
+            "endpoint": "/_apis/work/processes/$(processId)/workItemTypes/$(workItemType)/states?api-version=5.1-preview.1",
             "selector": "jsonpath:$.__wrappedArray[*]",
             "authKey": "tfs:teamfoundation"
         }

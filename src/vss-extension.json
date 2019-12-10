@@ -1,12 +1,12 @@
 {
     "manifestVersion": 1,
-    "id": "bluebasher-workitemupdater",
-    "version": "2.3.765",
-    "name": "WorkItem Updater",
+    "id": "TempWorksSoftware-workitemupdater",
+    "version": "0.2.1",
+    "name": "TempWorks WorkItem Updater",
     "scopes": [ "vso.work", "vso.work_write" ],
     "description": "Update the state of work items linked to a build.",
     "baseUri": "https://localhost",
-    "publisher": "BlueBasher",
+    "publisher": "TempWorksSoftware",
     "public": false,
     "icons": {
         "default": "img/logo.png"
@@ -29,13 +29,13 @@
     ],
     "links": {
         "getstarted": {
-            "uri": "https://github.com/BlueBasher/WorkItemUpdater/blob/master/src/overview.md"
+            "uri": "https://github.com/erikruggles/WorkItemUpdater/blob/master/src/overview.md"
         },
         "issues": {
-            "uri": "https://github.com/BlueBasher/WorkItemUpdater/issues"
+            "uri": "https://github.com/erikruggles/WorkItemUpdater/issues"
         },
         "repository": {
-            "uri": "https://github.com/BlueBasher/WorkItemUpdater"
+            "uri": "https://github.com/erikruggles/WorkItemUpdater"
         }
     },
     "content": {
@@ -58,11 +58,11 @@
         }
     ],
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "contributions": [
         {
-            "id": "bluebasher-workitemupdater",
+            "id": "TempWorksSoftware-workitemupdater",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],

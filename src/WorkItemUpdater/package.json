@@ -7,10 +7,10 @@
   },
   "dependencies": {
     "vso-node-api": "^6.5.0",
-    "vsts-task-lib": "^2.0.5"
+    "vsts-task-lib": "^2.7.0"
   },
   "devDependencies": {
-    "@types/node": "^8.0.7",
+    "@types/node": "^12.0.0",
     "@types/q": "1.5.0"
   }
 }
