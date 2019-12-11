@@ -1,17 +1,23 @@
 ﻿# WorkItem Updater
 
 ## Overview
-The WorkItem Updater task can update workitems using a Query or that are linked to the Build/Release.  
+The TempWorks WorkItem Updater task can update work items using a Query or that are linked to the Build/Release.  
 The following workitem fields can be updated:
-- Update the state for workitems.  
-- Update the assignee for workitems.  
-- Update the swimlane or board-column for workitems.  
-- Add the build as Development Link to the workitems.
+- Update the state for work items.  
+- Update the assignee for work items.  
+- Update the swimlane or board-column for work items.  
+- Add the build as Development Link to the work items.
   
 By adding this task to specific milestones in a build/release pipeline, you can create an automated kanban board.  
 An example would be to set the state to 'Resolved' as the last step of a build and to 'Deployed' as the last step of a release.  
-With this task the state of workitems is always reflecting reality and developers don't need to manually update workitems anymore.  
-  
+With this task the state of work items is always reflecting reality and developers don't need to manually update work items anymore.  
+
+## Limitations
+
+Work Item state updates are done via simple string compares without verifying which process or project a work item belongs to. This means that if multiple projects have different processes that share some states between work item types but not others, you can end up with errors as the project tries to move a work item to an invalid state. An example of this would be if you have two processes with `Bug` work items and one transitions from `In Code Review` to `Code Review Complete` and the other transitions from `In Code Review` to `Ready for Testing`. If work items from both are on the same pull request and you will get errors as it will try to move all bugs from `In Code Review` to `Code Review Complete` which will result in an invalid state for one of the processes. 
+
+## Preview
+
 A preview of what the task can do, can be seen in this recording:  
   
 ![AutoKanban](img/AutoKanban.gif)  
@@ -20,30 +26,5 @@ A preview of what the task can do, can be seen in this recording:
 ![settings](img/Settings.png)  
   
 ## Version History
-### 2.5.793
-- Functionality to add custom list of Fields to update 
-- Functionality to allow to bypass workitem type rules 
-- Functionality to allow to fail task when there's no workitem to update 
-### 2.4.784
-- Functionality to add tags to a workitem
-- Functionality to remove existing tags from a workitem  
-### 2.2.764
-- Functionality to, while deploying a release to an environment, update all workitems since the previously completed deployment.
-### 2.1.762
-- Be able to update multiple workitem types at once.
-### 2.0.23
-- Rebuild extension using Node.js.
-- Added option to specify the source of the workitems. This can be a Query or workitems linked to the build.
-### 1.5.9
-- Update 'Assigned To' with a fixed user.
-- Update 'Assigned To' with option to unassign the workitem.
-### 1.4.16
-- Filter the workitems to update by specifying the current state a workitem needs to have.
-### 1.3.6
-- Update Board-Swimlane.
-- Update Board-Column.
-### 1.2.0
-- Add Build as Development link.
-- Update 'Assigned To' with requester of the build.
-### 1.1.8
+### 1.0.0
 - Initial Version.

@@ -11,9 +11,9 @@
         "Release"
     ],
     "version": {
-        "Major": "0",
-        "Minor": "3",
-        "Patch": "1"
+        "Major": "1",
+        "Minor": "0",
+        "Patch": "0"
     },
     "demands": [],
     "minimumAgentVersion": "1.91.0",
@@ -23,7 +23,7 @@
         {
             "name": "workitemsSource",
             "type": "pickList",
-            "label": "WorkItem source",
+            "label": "Work Item Source",
             "defaultValue": "Build",
             "required": true,
             "helpMarkDown": "The source of the workitems to update.",
@@ -35,7 +35,7 @@
         {
             "name": "project",
             "type": "pickList",
-            "label": "Project",
+            "label": "Project to determine Work Item Types and States",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Select a project that has the Work Items and Work Item states you wish to move. This will not limit the tool to this project, it is just needed for the work item type and work item state dropdowns.",
@@ -57,7 +57,7 @@
         {
             "name": "workItemType",
             "type": "pickList",
-            "label": "WorkItem Type",
+            "label": "Work Item Type",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The type of workitems to update",
@@ -76,20 +76,9 @@
             "helpMarkDown": "While deploying a release to an environment, update all workitems since the previously completed deployment."
         },
         {
-            "name": "workItemState",
-            "type": "pickList",
-            "label": "WorkItem State",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "The state to update the workitems to",
-            "properties": {
-                "DisableManageLink": "True"
-            }
-        },
-        {
             "name": "workItemCurrentState",
             "type": "picklist",
-            "label": "Filter by WorkItem Current State",
+            "label": "Move Work Items from Current State(s)",
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "If defined, only update workitems that currently have this state. Leave empty to update from any state. Separate different valid states with ','",
@@ -97,6 +86,17 @@
                 "DisableManageLink": "True",
                 "EditableOptions": "False",
                 "MultiSelectFlatList": "True"
+            }
+        },
+        {
+            "name": "workItemState",
+            "type": "pickList",
+            "label": "Move Work Items to State",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The state to update the workitems to",
+            "properties": {
+                "DisableManageLink": "True"
             }
         },
         {
