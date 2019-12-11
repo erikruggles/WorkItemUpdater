@@ -28,8 +28,13 @@ tfx extension create --manifest-globs vss-extension.json
 ```
 
 ## Updating Azure Package
-Make sure that you incremented the version in both the `tasks.js` and `vss-extension.json` files.
+Make sure that you incremented the version in both the `task.json` and `vss-extension.json` files.
 
 Go to our [publisher](https://marketplace.visualstudio.com/manage/publishers/TempWorksSoftware) and clock the `...` symbol next to the extension. Select Update and then upload the new package. It will spend some time verifying the package and then it may take 5-10 minutes for the new package to be available for use in your pipeline.
 
 If you don't have access to our publisher, talk with Ruggles.
+
+## Important Files
+`task.json` is what is used to configure the setup screen in the Build/Release pipeline.
+
+`WorkItemUpdater.js` does all the actual work when the extension runs.
