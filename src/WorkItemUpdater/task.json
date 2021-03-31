@@ -12,7 +12,7 @@
     ],
     "version": {
         "Major": "1",
-        "Minor": "0",
+        "Minor": "1",
         "Patch": "0"
     },
     "demands": [],
@@ -231,6 +231,14 @@
                 "maxLength": "5000"
             },
             "helpMarkDown": "Tags to remove from the workitem. Enter a tag per line."
+        },
+        {
+            "name": "maxWorkItemsToUpdate",
+            "type": "number",
+            "label": "Max Work Items to Update",
+            "required": true,
+            "defaultValue": 1000,
+            "helpMarkDown": "The maximum number of work items to update."
         }
     ],
     "sourceDefinitions": [
