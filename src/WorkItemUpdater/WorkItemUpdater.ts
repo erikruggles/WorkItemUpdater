@@ -167,7 +167,7 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
             if (deployments.length > 0) {
                 const baseReleaseId = deployments[0].release.id;
                 tl.debug('Using Release ' + baseReleaseId + ' as BaseRelease for ' + settings.releaseId);
-                const releaseWorkItemRefs = await releaseClient.getReleaseWorkItemsRefs(settings.projectId, settings.releaseId, baseReleaseId);
+                const releaseWorkItemRefs = await releaseClient.getReleaseWorkItemsRefs(settings.projectId, settings.releaseId, baseReleaseId, settings.maxWorkItemsToUpdate);
                 const result: ResourceRef[] = [];
                 releaseWorkItemRefs.forEach((releaseWorkItem) => {
                     result.push({
@@ -181,7 +181,7 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
 
         console.log('Using Build as WorkItem Source');
         const buildClient: IBuildApi = await vstsWebApi.getBuildApi();
-        const workItemRefs: ResourceRef[] = await buildClient.getBuildWorkItemsRefs(settings.projectId, settings.buildId);
+        const workItemRefs: ResourceRef[] = await buildClient.getBuildWorkItemsRefs(settings.projectId, settings.buildId, settings.maxWorkItemsToUpdate);
         return workItemRefs;
     }
     else if (settings.workitemsSource === 'Query') {
@@ -197,7 +197,9 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
                     projectId: settings.projectId,
                     team: undefined,
                     teamId: undefined
-                });
+                },
+                undefined,
+                settings.maxWorkItemsToUpdate);
             queryResult.workItems.forEach((workItem) => {
                 result.push({
                     id: workItem.id.toString(),
