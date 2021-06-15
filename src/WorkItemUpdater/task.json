@@ -13,7 +13,7 @@
     "version": {
         "Major": "2",
         "Minor": "0",
-        "Patch": "3"
+        "Patch": "4"
     },
     "demands": [],
     "minimumAgentVersion": "1.91.0",
@@ -231,14 +231,6 @@
                 "maxLength": "5000"
             },
             "helpMarkDown": "Tags to remove from the workitem. Enter a tag per line."
-        },
-        {
-            "name": "maxWorkItemsToUpdate",
-            "type": "string",
-            "label": "Max Work Items to Update",
-            "required": true,
-            "defaultValue": "1000",
-            "helpMarkDown": "The maximum number of work items to update."
         }
     ],
     "sourceDefinitions": [
