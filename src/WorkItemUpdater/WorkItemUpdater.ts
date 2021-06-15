@@ -182,10 +182,17 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
         }
 
         console.log('Using Build as WorkItem Source');
-        console.log('Max Work Items to Update = ' + settings.maxWorkItemsToUpdate.toString());
+        if (settings) {
+            console.log('Settings are defined');
+            if (settings.maxWorkItemsToUpdate) {
+                console.log('Max Work Items to Update = ' + settings.maxWorkItemsToUpdate.toString());
+            }
+        } else {
+            console.log('Settings are undefined');
+        }
         const buildClient: IBuildApi = await vstsWebApi.getBuildApi();
         const workItemRefs: ResourceRef[] = await buildClient.getBuildWorkItemsRefs(settings.projectId, settings.buildId, settings.maxWorkItemsToUpdate);
-        console.log('Found ' + workItemRefs.length.toString() + ' work items');
+        console.log('Found ' + workItemRefs ? workItemRefs.length.toString() : '???' + ' work items');
         return workItemRefs;
     }
     else if (settings.workitemsSource === 'Query') {
