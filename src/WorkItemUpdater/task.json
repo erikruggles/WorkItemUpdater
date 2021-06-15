@@ -13,7 +13,7 @@
     "version": {
         "Major": "2",
         "Minor": "0",
-        "Patch": "2"
+        "Patch": "3"
     },
     "demands": [],
     "minimumAgentVersion": "1.91.0",
@@ -234,10 +234,10 @@
         },
         {
             "name": "maxWorkItemsToUpdate",
-            "type": "number",
+            "type": "string",
             "label": "Max Work Items to Update",
             "required": true,
-            "defaultValue": 1000,
+            "defaultValue": "1000",
             "helpMarkDown": "The maximum number of work items to update."
         }
     ],
