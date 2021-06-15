@@ -12,6 +12,8 @@ import { WorkItemQueryResult } from 'azure-devops-node-api/interfaces/WorkItemTr
 import { IReleaseApi } from 'azure-devops-node-api/ReleaseApi';
 import { DeploymentStatus, ReleaseQueryOrder } from 'azure-devops-node-api/interfaces/ReleaseInterfaces';
 
+const maxWorkItemsToUpdate = 1000;
+
 async function main(): Promise<void> {
     try {
         const vstsWebApi: WebApi = getVstsWebApi();
@@ -108,7 +110,6 @@ function getSettings(): Settings {
     settings.updateAssignedToWith = tl.getInput('updateAssignedToWith');
     settings.assignedTo = tl.getInput('assignedTo');
     settings.updateFields = tl.getInput('updateFields');
-    settings.maxWorkItemsToUpdate = parseInt(tl.getInput('maxWorkItemsToUpdate'), 10);
     settings.bypassRules = tl.getBoolInput('bypassRules');
     settings.failTaskIfNoWorkItemsAvailable = tl.getBoolInput('failTaskIfNoWorkItemsAvailable');
 
@@ -152,7 +153,6 @@ function getSettings(): Settings {
     tl.debug('assignedTo ' + settings.assignedTo);
     tl.debug('addTags ' + settings.addTags);
     tl.debug('updateFields ' + settings.updateFields);
-    tl.debug('maxWorkItemsToUpdate ' + settings.maxWorkItemsToUpdate);
     tl.debug('removeTags ' + settings.removeTags);
     tl.debug('bypassRules ' + settings.bypassRules);
     tl.debug('failTaskIfNoWorkItemsAvailable ' + settings.failTaskIfNoWorkItemsAvailable);
@@ -169,7 +169,7 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
             if (deployments.length > 0) {
                 const baseReleaseId = deployments[0].release.id;
                 tl.debug('Using Release ' + baseReleaseId + ' as BaseRelease for ' + settings.releaseId);
-                const releaseWorkItemRefs = await releaseClient.getReleaseWorkItemsRefs(settings.projectId, settings.releaseId, baseReleaseId, settings.maxWorkItemsToUpdate);
+                const releaseWorkItemRefs = await releaseClient.getReleaseWorkItemsRefs(settings.projectId, settings.releaseId, baseReleaseId, maxWorkItemsToUpdate);
                 const result: ResourceRef[] = [];
                 releaseWorkItemRefs.forEach((releaseWorkItem) => {
                     result.push({
@@ -182,17 +182,8 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
         }
 
         console.log('Using Build as WorkItem Source');
-        if (settings) {
-            console.log('Settings are defined');
-            if (settings.maxWorkItemsToUpdate) {
-                console.log('Max Work Items to Update = ' + settings.maxWorkItemsToUpdate.toString());
-            }
-        } else {
-            console.log('Settings are undefined');
-        }
         const buildClient: IBuildApi = await vstsWebApi.getBuildApi();
-        const workItemRefs: ResourceRef[] = await buildClient.getBuildWorkItemsRefs(settings.projectId, settings.buildId, settings.maxWorkItemsToUpdate);
-        console.log('Found ' + workItemRefs ? workItemRefs.length.toString() : '???' + ' work items');
+        const workItemRefs: ResourceRef[] = await buildClient.getBuildWorkItemsRefs(settings.projectId, settings.buildId, maxWorkItemsToUpdate);
         return workItemRefs;
     }
     else if (settings.workitemsSource === 'Query') {
@@ -210,7 +201,7 @@ async function getWorkItemsRefs(vstsWebApi: WebApi, workItemTrackingClient: IWor
                     teamId: undefined
                 },
                 undefined,
-                settings.maxWorkItemsToUpdate);
+                maxWorkItemsToUpdate);
             queryResult.workItems.forEach((workItem) => {
                 result.push({
                     id: workItem.id.toString(),
