@@ -236,25 +236,25 @@
     "sourceDefinitions": [
         {
             "target": "project",
-            "endpoint": "/_apis/projects?api-version=5.1",
+            "endpoint": "/_apis/projects?api-version=6.0",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemType",
-            "endpoint": "$(project)/_apis/wit/workitemtypes?api-version=5.1",
+            "endpoint": "$(project)/_apis/wit/workitemtypes?api-version=6.0",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemState",
-            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=5.1-preview.1",
+            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=6.0",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         },
         {
             "target": "workItemCurrentState",
-            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=5.1-preview.1",
+            "endpoint": "$(project)/_apis/wit/workitemtypes/$(workItemType)/states?api-version=6.0",
             "selector": "jsonpath:$.value[*].name",
             "authKey": "tfs:teamfoundation"
         }
