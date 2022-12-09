@@ -13,7 +13,7 @@
     "version": {
         "Major": "2",
         "Minor": "1",
-        "Patch": "0"
+        "Patch": "1"
     },
     "demands": [],
     "minimumAgentVersion": "1.91.0",
@@ -99,6 +99,7 @@
                 "DisableManageLink": "True"
             },
             "options": {
+                "": "",
                 "In Code Review": "In Code Review",
                 "Ready For Merge": "Ready For Merge",
                 "Ready for Testing": "Ready for Testing",
